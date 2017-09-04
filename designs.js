@@ -4,6 +4,7 @@ const inputWidth = document.querySelector('#input_width');
 const inputHeight = document.querySelector('#input_height');
 const inputColor = document.querySelector('#colorPicker');
 const canvas = document.querySelector('#pixel_canvas');
+const maxWidth = 30, maxHeight = 30;
 
 // remove all child nodes from grid
 function emptyGrid() {
@@ -18,25 +19,41 @@ function makeGrid(width, height) {
 	emptyGrid();
 
 	// draw new grid
-	for (let row=0; row < height; row++) {
-		var node = document.createElement('tr');
-		canvas.appendChild(node);
-
-		for (let col=0; col < width; col++)  {
-			var cell = document.createElement('td');
-			cell.className = 'cell';
-			canvas.querySelector('tr:last-child').appendChild(cell);
-		}
+	for (let i = 0; i < 10; i++) {
+	    // Inserts 10 rows into the table
+	    const row = canvas.insertRow(i);
+	    for (let j = 0; j < 10; j++) {
+	        // Inserts 10 cells into each of the rows
+	        const cell = row.insertCell(j);
+	        cell.className = 'cell';
+	    }
 	}
 }
 
-// When size is submitted by the user, call makeGrid()
-btnSubmit.addEventListener('click', function(e){
-	e.preventDefault();
-	makeGrid(inputWidth.value, inputHeight.value);
+// validate grid size when user manually types a number
+function validateMaxSize(max) {
+	if (this.value > max) {
+		this.value = max;
+		this.focus();
+
+		return false;
+	}
+
+	return true;
+}
+
+inputWidth.addEventListener('blur', function(e){
+	if (!validateMaxSize.call(this, maxWidth)) {
+		alert("Maximum width is " + maxWidth);
+	}
 });
 
-//paint cell with selected color when clicked
+inputHeight.addEventListener('blur', function(e){
+	if (!validateMaxSize.call(this, maxWidth)) {
+		alert("Maximum height is " + maxWidth);
+	}
+});
+
 canvas.addEventListener('click', function(e){
 	var cell = e.target;
 
@@ -47,4 +64,10 @@ canvas.addEventListener('click', function(e){
 		cell.style.backgroundColor = inputColor.value;
 		cell.className = 'painted';
 	}
+});
+
+// When size is submitted by the user, call makeGrid()
+btnSubmit.addEventListener('click', function(e){
+	e.preventDefault();
+	makeGrid(inputWidth.value, inputHeight.value);
 });
