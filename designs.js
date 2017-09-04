@@ -40,7 +40,6 @@ function makeGrid(width, height) {
 	    for (let j = 0; j < width; j++) {
 	        // Inserts 10 cells into each of the rows
 	        const cell = row.insertCell(j);
-	        cell.className = 'cell';
 	        cell.style.backgroundColor = '#fff';
 	        cell.addEventListener('click', paintCell);
 	    }
