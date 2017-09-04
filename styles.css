@@ -31,6 +31,7 @@ tr {
 
 td {
     width: 20px;
+    cursor: pointer;
 }
 
 input[type=number] {
